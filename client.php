@@ -1,7 +1,7 @@
 <html>
-    <form action="client.php" method="post">
+    <form action="client_recieve.php" method="post">
         <label for="info">Please complete this form to submit your feedback:</label><br>
-        <br>
+        <!-- <br>
         <label for="name">Name:</label>
         <select name="formal" id="formal">
           <option value="Mr">Mr</option>
@@ -22,18 +22,7 @@
         <br>
         <label for="comments">Comments:</label>
         <textarea name="comments" rows="2" cols="30"></textarea><br>
-        <br>
+        <br> -->
         <input type="submit" value="Send my Feedback"><br>
       </form> 
 </html>
-
-<?php 
-  #prevent from running unless there's actually a post
-  $response = "'" .$_POST['response']. "'";
-  echo "You stated that you found this example to be ";
-  echo '<span style="color: red;">'.$response.'</span>';
-  echo " and added the following comments:<br>";
-
-  $comments = "'" .$_POST['comments']. "'";
-  echo '<span style="color: red;">'.$comments.'</span>';
-?>
