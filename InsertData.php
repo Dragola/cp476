@@ -2,7 +2,7 @@
 //you should make sure it logins on your mysql
 $servername = "localhost";
 $username = "root";
-$password = "mniwpp.12345";
+$password = "";
 
 $dbname = "studentsdatabase";
 
