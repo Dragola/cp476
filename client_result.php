@@ -33,6 +33,17 @@
       }
     }
   }
+  else if ($_POST['mode'] == "UPDATE") {
+    $students= $_POST['students'];
+    echo "<br>UPDATE selected.<br>";
+
+    // No student names/id's
+    if ($students == '') {
+        echo "No students entered. Please enter a student name or ID for changing.";
+    }
+    else {
+    }
+  }
 
   # Call database with query...
   $sql_query = $response. " other parts of the query";

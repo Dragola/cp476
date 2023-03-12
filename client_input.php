@@ -27,9 +27,9 @@
         </div>
 
         <div class="UPDATE" id="UPDATE" name="UPDATE" style="display: none">
-          <label for="students_info">Id/Name of students to update (use , to seperate)</label>
+          <label for="students">Id/Name of students to update (use , to seperate)</label>
           <br>
-          <textarea name="students_info" rows="2" cols="30"></textarea><br>
+          <textarea name="students" rows="2" cols="30"></textarea><br>
           <br>
           <label for="students_class">Class of the students to update (use , to seperate)</label>
           <br>
