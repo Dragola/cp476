@@ -32,7 +32,7 @@ if ($conn->connect_error) {
 //create student tabel
 $sql = "CREATE TABLE $nametable (
     Student_ID INT(9) NOT NULL,
-    firstname VARCHAR(30) NOT NULL
+    Student_Name VARCHAR(30) NOT NULL
     )";
     
 if ($conn->query($sql) === TRUE) {
