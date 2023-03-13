@@ -46,7 +46,7 @@ Output one line until end-of-file
 parse the data values and split them into ID and Name
 */
 while(!feof($myfile)) {
-    $string = substr(fgets($myfile), 0, -2);
+    $string = substr(fgets($myfile), 0, -1);
     $infoArray="";
     if (strlen($string) >= 1){
         $infoArray=explode(", ",$string);
