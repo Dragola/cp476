@@ -60,41 +60,38 @@ function queryAll($servername, $username, $password, $DB){
         return $result;
 }
 
-function updateTest($servername, $username, $password, $DB, $studentid,$course,$test1,$test2,$test3,$final){
+function updateTest($servername, $username, $password, $DB, $studentid, $course, $test, $grade){
     $conn = new mysqli($servername, $username, $password, $DB);
     // Check connection
     if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+        die("Connection failed: " . $conn->connect_error);
     }
-    if (is_numeric($test1)){
-        $sql = "UPDATE Course_Table SET Test1 = ? WHERE Student_ID = ? AND Course_Code = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iis", $test1, $studentid,$course);
-        $stmt->execute();
-        $stmt->close();
-    }
-    if (is_numeric($test2)){
-        $sql = "UPDATE Course_Table SET Test2 = ? WHERE Student_ID=? AND Course_Code = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iis", $test2, $studentid, $course);
-        $stmt->execute();
-        $stmt->close();
-    }
-    if (is_numeric($test3)){
-        $sql = "UPDATE Course_Table SET Test3 = ? WHERE Student_ID=? AND Course_Code = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iis", $test3, $studentid,$course);
-        $stmt->execute();
-        $stmt->close();
-    }
-    if (is_numeric($final)){
-        $sql = "UPDATE Course_Table SET Final = ? WHERE Student_ID=? AND Course_Code = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iis", $final, $studentid,$course);
-        $stmt->execute();
-        $stmt->close();
+    switch ($test) {
+        case 1:
+            $sql = "UPDATE Course_Table SET Test1 = ? WHERE Student_ID = ? AND Course_Code = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iis", $grade, $studentid,$course);
+            $stmt->execute();
+            break;
+        case 2:
+            $sql = "UPDATE Course_Table SET Test2 = ? WHERE Student_ID = ? AND Course_Code = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iis", $grade, $studentid, $course);
+            $stmt->execute();
+            break;
+        case 3:
+            $sql = "UPDATE Course_Table SET Test3 = ? WHERE Student_ID = ? AND Course_Code = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iis", $grade, $studentid,$course);
+            $stmt->execute();
+            break;
+        case 4:
+            $sql = "UPDATE Course_Table SET Final = ? WHERE Student_ID = ? AND Course_Code = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("iis", $grade, $studentid,$course);
+            $stmt->execute();
+            break;
     }
     $conn->close();
 }
-
 ?>

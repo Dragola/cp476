@@ -56,7 +56,7 @@
           <label for="radio">2</label>
           <input type="radio" id="student_test" name="student_test" value="3">
           <label for="radio">3</label>
-          <input type="radio" id="student_test" name="student_test" value="Final">
+          <input type="radio" id="student_test" name="student_test" value="4">
           <label for="radio">Final</label>
           <br><br>
 
