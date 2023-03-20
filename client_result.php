@@ -1,4 +1,6 @@
 <?php
+  require('functions.php');
+
   // check if operator SELECT or UPDATE was chosen
   if (key_exists('mode', $_POST) == false) {
     echo "No operation selected, please try again with either SELECT or UPDATE selected."; //print message that no operator was selected
@@ -27,7 +29,7 @@
         
         // ensure that there is a string to check
         if($trimmed != '') {
-          echo "Student= " .$trimmed. ": ";
+          echo "Student= " .$trimmed. "| ";
         }
       }
       
@@ -40,12 +42,22 @@
           // id was entered
           if(ctype_digit($value[0])) {
             echo "Id Entered<br>";
+
+            // Need database login to call this!
             // call backend function to get by id.
+            #$result = grabStudentCoursesID($servername, $username,$password, $DB, $value);
+
+            //print output
           }
           // name was entered
           else {
             echo "Name Entered<br>";
+
+            // Need database login to call this!
             // call backend function to get by name.
+            #$result = grabStudentCoursesName($servername, $username,$password, $DB, $value);
+           
+            //print output
           }
         }
       }
@@ -65,7 +77,10 @@
         // id was entered
         if(ctype_digit($student_array[0][0])) {
           echo "Id Entered<br>";
-          // call backend function to update the selected test
+
+          // Need database login to call this!
+          // call backend function to update the selected test (can just pass back number 1-4 to indicate what test to update)
+          #updateTest($servername, $username, $password, $DB, $studentid,$course,$test1,$test2,$test3,$final);
         }
         // named was entered
         else {

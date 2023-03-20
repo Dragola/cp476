@@ -1,3 +1,14 @@
+<?php
+  require('functions.php');
+  
+  // Need database login to call this!
+  #$result = queryAll($servername, $username, $password, $DB);
+
+  // print database
+
+  echo "<br> <br>";
+?>
+
 <html>
   <head>
     <script src="jquery-1.11.0.js"></script>
@@ -27,12 +38,12 @@
         </div>
 
         <div class="UPDATE" id="UPDATE" name="UPDATE" style="display: none">
-          <label for="students">Id of students to update (use , to seperate)</label>
+          <label for="students">Id of student to update:</label>
           <br>
           <textarea name="students" rows="2" cols="30"></textarea><br>
           <br>
 
-          <label for="students_class">Class of the students to update (use , to seperate)</label>
+          <label for="students_class">Class the student is taking:</label>
           <br>
           <textarea name="students_class" rows="2" cols="30"></textarea><br>
           <br>
@@ -49,7 +60,7 @@
           <label for="radio">Final</label>
           <br><br>
 
-          <label for="students_grade">Grade of the students to update (use , to seperate)</label>
+          <label for="students_grade">Grade to update the test to:</label>
           <br>
           <textarea name="students_grade" rows="1" cols="30"></textarea><br>
         </div>
