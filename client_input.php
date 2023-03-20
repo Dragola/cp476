@@ -27,14 +27,28 @@
         </div>
 
         <div class="UPDATE" id="UPDATE" name="UPDATE" style="display: none">
-          <label for="students">Id/Name of students to update (use , to seperate)</label>
+          <label for="students">Id of students to update (use , to seperate)</label>
           <br>
           <textarea name="students" rows="2" cols="30"></textarea><br>
           <br>
+
           <label for="students_class">Class of the students to update (use , to seperate)</label>
           <br>
           <textarea name="students_class" rows="2" cols="30"></textarea><br>
           <br>
+
+          <label for="test_info">Select the test you'd like to update: </label>
+          <br>
+          <input type="radio" id="student_test" name="student_test" value="1">
+          <label for="radio">1</label>
+          <input type="radio" id="student_test" name="student_test" value="2">
+          <label for="radio">2</label>
+          <input type="radio" id="student_test" name="student_test" value="3">
+          <label for="radio">3</label>
+          <input type="radio" id="student_test" name="student_test" value="Final">
+          <label for="radio">Final</label>
+          <br><br>
+
           <label for="students_grade">Grade of the students to update (use , to seperate)</label>
           <br>
           <textarea name="students_grade" rows="1" cols="30"></textarea><br>
