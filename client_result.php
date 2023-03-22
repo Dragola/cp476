@@ -6,17 +6,28 @@
     echo "No operation selected, please try again with either SELECT or UPDATE selected."; //print message that no operator was selected
   }
   else {
-    $response = "'" .$_POST['mode']. "'";
+    $mode = $_POST['mode']; // get the mode (SELECT or UPDATE)
+    $response = "'" .$mode. "'";
     echo "Atempting to run " .$response. " on the database...<br>";
-  
-    // grab list of students to process (working for UPDATE but not SELECT...)
-    $students= $_POST['students'];
+    
+    // grab list of students to process
+    if ($mode == "SELECT") {
+      $students= $_POST['students_select'];
+    } else {
+      $students= $_POST['students_update'];
+    }
     echo "Students entered= " .$students. "<br><br>";
   
     // check that student string isn't empty
     $trimmed_students = trim($students);
     if ($trimmed_students == '') {
-      echo "No students entered, please try again with at least 1 student name/id.";
+
+      // print error based on mode
+      if ($mode == 'SELECT') {
+        echo "No students entered, please try again with at least 1 student name/id."; // SELECT error
+      } else {
+        echo "No students entered, please try again with a single id."; // UPDATE error
+      }
     }
     else {
       echo "Splitting students string...<br>";
@@ -29,12 +40,12 @@
         
         // ensure that there is a string to check
         if($trimmed != '') {
-          echo "Student= " .$trimmed. "| ";
+          echo "Student= " .$trimmed. ", ";
         }
       }
       
       // if operator SELECT was picked
-      if ($_POST['mode'] == "SELECT") {
+      if ($mode == "SELECT") {
         echo "<br>SELECT selected.<br>";
     
         //loop through names
@@ -60,23 +71,25 @@
             //print output
           }
         }
-      }
-      // if operator UPDATE was picked
-      else if ($_POST['mode'] == "UPDATE") {
+      } else { // if operator UPDATE was picked
         echo "<br>UPDATE selected.<br>";
 
+        // verify an id was entered
+        if(ctype_digit($student_array[0][0])) {
+          echo "Id Entered<br>";
+          
+        $error = 0; // determine if any information is missing
+        // get the class to be updated for student
         $class= $_POST['students_class'];
         echo "Class= " .$class. "<br><br>";
 
+        // get the test to be updated for student
         $test= $_POST['student_test'];
         echo "Test to update is= " .$test. "<br><br>";
 
+        // get the new grade to set
         $grade= $_POST['students_grade'];
         echo "Grade will be updated= " .$grade. "<br><br>";
-    
-        // id was entered
-        if(ctype_digit($student_array[0][0])) {
-          echo "Id Entered<br>";
 
           // Need database login to call this!
           // call backend function to update the selected test (can just pass back number 1-4 to indicate what test to update)
