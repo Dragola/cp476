@@ -32,15 +32,15 @@
         <br>
 
         <div class="SELECT" id="SELECT" name="SELECT" style="display: none"> 
-          <label for="students">Id/Name of students to select (use , to seperate)</label>
+          <label for="students_select">Id/Name of students to select (use , to seperate)</label>
           <br>
-          <textarea name="students" rows="2" cols="30"></textarea><br>
+          <textarea name="students_select" rows="2" cols="30"></textarea><br>
         </div>
 
         <div class="UPDATE" id="UPDATE" name="UPDATE" style="display: none">
-          <label for="students">Id of student to update:</label>
+          <label for="students_update">Id of student to update:</label>
           <br>
-          <textarea name="students" rows="2" cols="30"></textarea><br>
+          <textarea name="students_update" rows="2" cols="30"></textarea><br>
           <br>
 
           <label for="students_class">Class the student is taking:</label>
