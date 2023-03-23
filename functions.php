@@ -135,5 +135,22 @@ class Database
         }
         $conn->close();
     }
+    /*
+    mass query of the database for every entry.
+    */
+    function allStudents()
+    {
+        // Check connection
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->DB);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT * FROM Name_Table";
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
+    }
 }
 ?>
