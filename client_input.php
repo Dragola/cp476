@@ -1,8 +1,8 @@
 <?php
   require('functions.php');
-  
+
   require('authentication.php');
-  authenticate();
+  check_auth();
 
   echo "<br> <br>";
 ?>

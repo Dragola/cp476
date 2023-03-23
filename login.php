@@ -1,11 +1,8 @@
 <?php
 
 require('authentication.php');
+require('functions.php');
 forward_authenticated();
-
-
-$servername = "localhost";
-$dbname = "StudentsDatabase";
 
 // Define variables and initialize with empty values
 $username = $password = "";
@@ -30,19 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Validate credentials
   if (empty($username_err) && empty($password_err)) {
-    try {
-      $conn = new mysqli($servername, $username, $password, $dbname);
-      // Check connection
-      if ($conn->connect_error) {
-
-
-        $username_err = "Incorrect login.";
-        $password_err = "";
-      }
-      $conn->close();
-      $_SESSION["loggedin"] = true;
-      header("location: client_input.php");
-    } catch (Exception $e) {
+    $db = new Database($username, $password);
+    if ($db->CheckLogin()) {
+      logon();
+    } else {
       $username_err = "Incorrect login.";
       $password_err = "";
     }

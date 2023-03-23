@@ -1,12 +1,25 @@
 <?php
+$homepage = "client_input.php";
+$login_page = "login.php";
 
-
-function authenticate()
+function logon()
 {
+  global $homepage;
+
+  session_start();
+
+  $_SESSION["loggedin"] = true;
+  header("location: " . $homepage);
+}
+
+function check_auth()
+{
+  global $login_page;
+
   session_start();
 
   if (!isset($_SESSION["loggedin"])) {
-    header("location: login.php");
+    header("location: " . $login_page);
     exit;
   }
 }
@@ -14,10 +27,12 @@ function authenticate()
 
 function forward_authenticated()
 {
+  global $homepage;
+
   session_start();
 
   if (isset($_SESSION["loggedin"])) {
-    header("location: client_input.php");
+    header("location: " . $homepage);
     exit;
   }
 }
