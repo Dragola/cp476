@@ -109,8 +109,20 @@ echo "<br> <br>";
   </script>
 
   <?php
-  $db = new Database("root", "Silveroffice1!");
-  echo $db->queryAll();
+
+
+  $database = new Database("root", "Silveroffice1!");
+  echo "<table><tr><th>Student ID</th> <th>Student Name</th></tr>";
+
+  $result = $database->allStudents();
+  while ($row = $result->fetch_array()) {
+
+    echo "<tr>";
+    echo "<td>" . $row['Student_ID'] . "</td><td>" . $row['Student_Name'] . "</td>";
+
+  }
+
+  echo "</table>";
   ?>
 </body>
 
