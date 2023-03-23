@@ -75,15 +75,9 @@
         foreach ($student_array as $value) {
           // id was entered
           if (ctype_digit($value[0])) {
-            echo "Id Entered<br>";
+            echo "ID Entered: " . $value . "<br>";
 
-            // Need database login to call this!
-            // call backend function to get by id.
-            #$result = grabStudentCoursesID($servername, $username,$password, $DB, $value);
-  
             echo "<table><tr><th>Student ID</th> <th>Student Name</th><th>Course_Code</th><th> Test1 </th><th>Test2</th><th>Test3</th><th>Final</th></tr>";
-
-
 
             $db = new Database("root", "Silveroffice1!");
             $result = $db->grabStudentCoursesID($value);
@@ -102,18 +96,29 @@
             }
             echo "</table><br/>";
 
-
-            //print output
           }
           // name was entered
           else {
-            echo "Name Entered<br>";
+            echo "Name Entered: " . $value . "<br>";
 
-            // Need database login to call this!
-            // call backend function to get by name.
-            #$result = grabStudentCoursesName($servername, $username,$password, $DB, $value);
-  
-            //print output
+            echo "<table><tr><th>Student ID</th> <th>Student Name</th><th>Course_Code</th><th> Test1 </th><th>Test2</th><th>Test3</th><th>Final</th></tr>";
+
+            $db = new Database("root", "Silveroffice1!");
+            $result = $db->grabStudentCoursesName($value);
+
+            while ($row = $result->fetch_array()) {
+
+              echo "<tr>";
+              echo "<td>" . $row['Student_ID'] . "</td>";
+              echo "<td>" . $row['Student_Name'] . "</td>";
+              echo "<td>" . $row['Course_Code'] . "</td>";
+              echo "<td>" . $row['Test1'] . "</td>";
+              echo "<td>" . $row['Test2'] . "</td>";
+              echo "<td>" . $row['Test3'] . "</td>";
+              echo "<td>" . $row['Final'] . "</td>";
+              echo "</tr>";
+            }
+            echo "</table><br/>";
           }
         }
       } else { // if operator UPDATE was picked
