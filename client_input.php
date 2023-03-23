@@ -1,10 +1,11 @@
 <?php
   require('functions.php');
   
-  // Need database login to call this!
-  #$result = queryAll($servername, $username, $password, $DB);
-
-  // print database
+  if (!isset($_SESSION["loggedin"])) {
+   header("location: login.php");
+   exit;
+  }
+  
 
   echo "<br> <br>";
 ?>
@@ -68,6 +69,11 @@
       
       <input type="submit" value="Call database"><br>
     </form> 
+
+    <form action="logout.php" method="post">
+    <input type="submit" value="Logout"><br>
+
+  </form>
   
     <script>
       $(document).ready(function() {
