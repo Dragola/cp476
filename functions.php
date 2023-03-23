@@ -18,6 +18,19 @@ class Database{
     {
         echo 'database connection closed';
     }
+    function CheckLogin(){
+        try {
+            $conn = new mysqli($this->servername, $this->username, $this->password);
+            echo "Connected successfully";
+            return true;
+            $conn->close();
+        } 
+        catch(Exception $e) {
+            echo "login failed";
+            return false;
+        }
+    }
+
 
     function grabStudentCoursesName($studentname){
         // Create connection
