@@ -55,15 +55,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   }
 
-
-
-  // if ($username === "Danny") {
-  //   $username_err = "Incorrect login.";
-  //   $password_err = "";
-  // } else {
-  //   header("location: client_input.php");
-
-  // }
 }
 
 ?>
