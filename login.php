@@ -2,43 +2,45 @@
 
 require('authentication.php');
 require('functions.php');
+
+// If user is already logged in, forward to homepage
 forward_authenticated();
 
-// Define variables and initialize with empty values
-$username = $password = "";
-$username_err = $password_err = $login_err = "";
+// Form values
+$username = "";
+$password = "";
+$error_username = "";
+$error_password = "";
+$credential_error = "";
 
-// Processing form data when form is submitted
+// Process information if coming from POST request (previous attempted login)
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Check if username is empty
   if (empty(trim($_POST["username"]))) {
-    $username_err = "Please enter username.";
+    $error_username = "Please enter username.";
   } else {
     $username = trim($_POST["username"]);
   }
 
   // Check if password is empty
   if (empty(trim($_POST["password"]))) {
-    $password_err = "Please enter your password.";
+    $error_password = "Please enter your password.";
   } else {
     $password = trim($_POST["password"]);
   }
 
   // Validate credentials
-  if (empty($username_err) && empty($password_err)) {
+  if (empty($error_username) && empty($error_password)) {
     $db = new Database($username, $password);
     if ($db->CheckLogin()) {
       logon();
     } else {
-      $username_err = "Incorrect login.";
-      $password_err = "";
+      $error_username = "";
+      $error_password = "";
+      $credential_error = "Incorrect username/password.";
     }
-
-
-
   }
-
 }
 
 ?>
@@ -55,47 +57,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       font: 14px sans-serif;
     }
 
-    .wrapper {
-      width: 360px;
-      padding: 20px;
+    .container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .content {
+      width: 450px;
+      padding-top: 100px;
     }
   </style>
 </head>
 
 <body>
-  <div class="wrapper">
-    <h2>Login</h2>
-    <p>Please fill in your credentials to login.</p>
+  <div class="container">
+    <div class="content">
 
-    <?php
-    if (!empty($login_err)) {
-      echo '<div class="alert alert-danger">' . $login_err . '</div>';
-    }
-    ?>
+      <h2>Welcome to Student Information Database!</h2>
+      <p>Please enter the database username and password to login.</p>
 
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-      <div class="form-group">
-        <label>Username</label>
-        <input type="text" name="username"
-          class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>"
-          value="<?php echo $username; ?>">
-        <span class="invalid-feedback">
-          <?php echo $username_err; ?>
-        </span>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" name="password"
-          class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-        <span class="invalid-feedback">
-          <?php echo $password_err; ?>
-        </span>
-      </div>
-      <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Login">
-      </div>
+      <?php
+      if (!empty($credential_error)) {
+        echo '<div class="alert alert-danger">' . $credential_error . '</div>';
+      }
+      ?>
 
-    </form>
+      <form method="post">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" name="username"
+            class="form-control <?php echo (!empty($error_username)) ? 'is-invalid' : ''; ?>"
+            value="<?php echo $username; ?>">
+          <span class="invalid-feedback">
+            <?php echo $error_username; ?>
+          </span>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password"
+            class="form-control <?php echo (!empty($error_password)) ? 'is-invalid' : ''; ?>">
+          <span class="invalid-feedback">
+            <?php echo $error_password; ?>
+          </span>
+        </div>
+        <div class="form-group">
+          <input type="submit" class="btn btn-primary" value="Login">
+        </div>
+
+      </form>
+    </div>
   </div>
 </body>
 
