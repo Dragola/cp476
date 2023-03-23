@@ -2,8 +2,8 @@
 // Initialize the session
 session_start();
 
-// Check if the user is already logged in, if yes then redirect him to welcome page
-if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+
+if (isset($_SESSION["loggedin"])) {
   header("location: client_input.php");
   exit;
 }
@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $password_err = "";
       }
       $conn->close();
+      $_SESSION["loggedin"] = true;
       header("location: client_input.php");
     } catch (Exception $e) {
       $username_err = "Incorrect login.";
