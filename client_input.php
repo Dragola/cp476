@@ -37,7 +37,7 @@ echo "<br> <br>";
 
     .content {
       width: 75%;
-      padding-top: 100px;
+      padding-top: 50px;
     }
   </style>
 </head>
