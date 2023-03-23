@@ -46,7 +46,7 @@ class Database
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $sql = "SELECT Course_Table.Student_ID, Name_Table.Student_Name,Course_Table.Course_Code, Course_Table.Test1, Course_Table.Test2, Course_Table.Test3, Course_Table.Final FROM Course_Table INNER JOIN Name_Table ON Name_Table.Student_ID=Course_Table.Student_ID WHERE Student_Name = ?";
+        $sql = "SELECT DISTINCT Course_Table.Student_ID, Name_Table.Student_Name,Course_Table.Course_Code, Course_Table.Test1, Course_Table.Test2, Course_Table.Test3, Course_Table.Final FROM Course_Table INNER JOIN Name_Table ON Name_Table.Student_ID=Course_Table.Student_ID WHERE Student_Name = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $studentname);
@@ -70,7 +70,7 @@ class Database
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "SELECT Course_Table.Student_ID, Name_Table.Student_Name,Course_Table.Course_Code, Course_Table.Test1, Course_Table.Test2, Course_Table.Test3, Course_Table.Final FROM Course_Table, Name_Table WHERE Name_Table.Student_ID=Course_Table.Student_ID AND Course_Table.Student_ID = ?";
+        $sql = "SELECT DISTINCT Course_Table.Student_ID, Name_Table.Student_Name,Course_Table.Course_Code, Course_Table.Test1, Course_Table.Test2, Course_Table.Test3, Course_Table.Final FROM Course_Table, Name_Table WHERE Name_Table.Student_ID=Course_Table.Student_ID AND Course_Table.Student_ID = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $studentid);
         $stmt->execute();
@@ -134,6 +134,23 @@ class Database
                 break;
         }
         $conn->close();
+    }
+    /*
+    mass query of the database for every entry.
+    */
+    function allStudents()
+    {
+        // Check connection
+        $conn = new mysqli($this->servername, $this->username, $this->password, $this->DB);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT * FROM Name_Table";
+        $result = $conn->query($sql);
+        $conn->close();
+        return $result;
     }
 }
 ?>
