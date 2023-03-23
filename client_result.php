@@ -1,23 +1,47 @@
-<?php
+<html>
+
+<head>
+  <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+  </style>
+</head>
+<form action="client_input.php" method="post">
+  <br>
+
+  <?php
   require('functions.php');
 
   // check if operator SELECT or UPDATE was chosen
   if (key_exists('mode', $_POST) == false) {
     echo "No operation selected, please try again with either SELECT or UPDATE selected."; //print message that no operator was selected
-  }
-  else {
+  } else {
     $mode = $_POST['mode']; // get the mode (SELECT or UPDATE)
-    $response = "'" .$mode. "'";
-    echo "Atempting to run " .$response. " on the database...<br>";
-    
+    $response = "'" . $mode . "'";
+    echo "Atempting to run " . $response . " on the database...<br>";
+
     // grab list of students to process
     if ($mode == "SELECT") {
-      $students= $_POST['students_select'];
+      $students = $_POST['students_select'];
     } else {
-      $students= $_POST['students_update'];
+      $students = $_POST['students_update'];
     }
-    echo "Students entered= " .$students. "<br><br>";
-  
+    echo "Students entered= " . $students . "<br><br>";
+
     // check that student string isn't empty
     $trimmed_students = trim($students);
     if ($trimmed_students == '') {
@@ -28,35 +52,56 @@
       } else {
         echo "No students entered, please try again with a single id."; // UPDATE error
       }
-    }
-    else {
+    } else {
       echo "Splitting students string...<br>";
       // seperate the student names/id's into an array
-      $student_array= explode(",", $trimmed_students);
+      $student_array = explode(",", $trimmed_students);
 
       // trim any whitespace in the students name
       foreach ($student_array as $value) {
         $trimmed = trim($value);
-        
+
         // ensure that there is a string to check
-        if($trimmed != '') {
-          echo "Student= " .$trimmed. ", ";
+        if ($trimmed != '') {
+          echo "Student= " . $trimmed . ", ";
         }
       }
-      
+
       // if operator SELECT was picked
       if ($mode == "SELECT") {
         echo "<br>SELECT selected.<br>";
-    
+
         //loop through names
         foreach ($student_array as $value) {
           // id was entered
-          if(ctype_digit($value[0])) {
+          if (ctype_digit($value[0])) {
             echo "Id Entered<br>";
 
             // Need database login to call this!
             // call backend function to get by id.
             #$result = grabStudentCoursesID($servername, $username,$password, $DB, $value);
+  
+            echo "<table><tr><th>Student ID</th> <th>Student Name</th><th>Course_Code</th><th> Test1 </th><th>Test2</th><th>Test3</th><th>Final</th></tr>";
+
+
+
+            $db = new Database("root", "Silveroffice1!");
+            $result = $db->grabStudentCoursesID($value);
+
+            while ($row = $result->fetch_array()) {
+
+              echo "<tr>";
+              echo "<td>" . $row['Student_ID'] . "</td>";
+              echo "<td>" . $row['Student_Name'] . "</td>";
+              echo "<td>" . $row['Course_Code'] . "</td>";
+              echo "<td>" . $row['Test1'] . "</td>";
+              echo "<td>" . $row['Test2'] . "</td>";
+              echo "<td>" . $row['Test3'] . "</td>";
+              echo "<td>" . $row['Final'] . "</td>";
+              echo "</tr>";
+            }
+            echo "</table><br/>";
+
 
             //print output
           }
@@ -67,7 +112,7 @@
             // Need database login to call this!
             // call backend function to get by name.
             #$result = grabStudentCoursesName($servername, $username,$password, $DB, $value);
-           
+  
             //print output
           }
         }
@@ -75,21 +120,21 @@
         echo "<br>UPDATE selected.<br>";
 
         // verify an id was entered
-        if(ctype_digit($student_array[0][0])) {
+        if (ctype_digit($student_array[0][0])) {
           echo "Id Entered<br>";
-          
-        $error = 0; // determine if any information is missing
-        // get the class to be updated for student
-        $class= $_POST['students_class'];
-        echo "Class= " .$class. "<br><br>";
 
-        // get the test to be updated for student
-        $test= $_POST['student_test'];
-        echo "Test to update is= " .$test. "<br><br>";
+          $error = 0; // determine if any information is missing
+          // get the class to be updated for student
+          $class = $_POST['students_class'];
+          echo "Class= " . $class . "<br><br>";
 
-        // get the new grade to set
-        $grade= $_POST['students_grade'];
-        echo "Grade will be updated= " .$grade. "<br><br>";
+          // get the test to be updated for student
+          $test = $_POST['student_test'];
+          echo "Test to update is= " . $test . "<br><br>";
+
+          // get the new grade to set
+          $grade = $_POST['students_grade'];
+          echo "Grade will be updated= " . $grade . "<br><br>";
 
           // Need database login to call this!
           // call backend function to update the selected test (can just pass back number 1-4 to indicate what test to update)
@@ -102,13 +147,11 @@
       }
     }
   }
-  
-  #should pass back previous input (if I get time to figure out)
-?>
 
-<html>
-    <form action="client_input.php" method="post">
-        <br>
-        <input type="submit" value="Return to Input"><br>
-    </form>
+  #should pass back previous input (if I get time to figure out)
+  ?>
+
+
+  <input type="submit" value="Return to Input"><br>
+</form>
 <html>
