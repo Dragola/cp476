@@ -113,7 +113,9 @@
               else {
                 echo "Name Entered: " . $value . "<br>";
 
-                echo "<table><tr><th>Student ID</th> <th>Student Name</th><th>Course_Code</th><th> Test1 </th><th>Test2</th><th>Test3</th><th>Final</th></tr>";
+                echo "<table><tr><th>Student ID</th> <th>Student Name</th><th>Course Code</th><th>Final grade (test
+                1,2,3-3x20%, final
+                exam 40%</th></tr>";
 
                 $db = new Database("root", "Silveroffice1!");
                 $result = $db->grabStudentCoursesName($value);
@@ -124,10 +126,8 @@
                   echo "<td>" . $row['Student_ID'] . "</td>";
                   echo "<td>" . $row['Student_Name'] . "</td>";
                   echo "<td>" . $row['Course_Code'] . "</td>";
-                  echo "<td>" . $row['Test1'] . "</td>";
-                  echo "<td>" . $row['Test2'] . "</td>";
-                  echo "<td>" . $row['Test3'] . "</td>";
-                  echo "<td>" . $row['Final'] . "</td>";
+                  echo "<td>" . number_format($row['Test1'] * .2 + $row['Test2'] * .2 + $row['Test3'] * .2 + $row['Final'] * .3, 1) . "</td>";
+
                   echo "</tr>";
                 }
                 echo "</table><br/>";
