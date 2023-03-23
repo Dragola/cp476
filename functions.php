@@ -8,6 +8,7 @@ class Database{
     private $username;
     private $password;
     private $DB = "StudentsDatabase";
+    //constructor of the database taking in the database username and password.
     function __construct($username,$password)
     {
         $this->username = $username;
@@ -18,6 +19,7 @@ class Database{
     {
         echo 'database connection closed';
     }
+    //check to see if password and username are valid
     function CheckLogin(){
         try {
             $conn = new mysqli($this->servername, $this->username, $this->password);
