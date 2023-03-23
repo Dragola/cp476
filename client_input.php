@@ -1,13 +1,8 @@
 <?php
   require('functions.php');
-  
-  session_start();
 
-  if (!isset($_SESSION["loggedin"])) {
-   header("location: login.php");
-   exit;
-  }
-  
+  require('authentication.php');
+  check_auth();
 
   echo "<br> <br>";
 ?>
