@@ -137,16 +137,17 @@
             echo "<br>UPDATE selected.<br>";
             try {
               // verify an id was entered
-              if (ctype_digit($student_array[0][0]) == false) {
+              $student_id = $student_array[0];
+              if (ctype_digit($student_id) == false) {
                 throw new Exception("Appologies, but you must use a students id to update a grade. Please try again with a student id.");
               }
               // echo "Id Entered<br>";
 
               // get the class to be updated for student
-              $class = $_POST['students_class'];
+              $course = $_POST['students_course'];
               
               // class doesn't start with alphabetic character
-              if ($class == "" or ctype_alpha($class[0]) == false) {
+              if ($course == "" or ctype_alpha($course[0]) == false) {
                 throw new Exception("No class entered or wrong format used. Please try again.");
               }
 
@@ -161,10 +162,11 @@
                 throw new Exception("No grade entered or wrong format");
               }
 
-              // Need database login to call this!
               // call backend function to update the selected test (can just pass back number 1-4 to indicate what test to update)
-              #updateTest($servername, $username, $password, $DB, $studentid,$course,$test1,$test2,$test3,$final);
+              $db = new Database("root", "Silveroffice1!");
+              $result = $db->updateTest($student_id, $course, $test, $grade);
               
+              echo "Update complete. Please select the student to verify the change.";
               } catch(Exception $e) {
                 echo $e->getMessage(); // print error message
               }
