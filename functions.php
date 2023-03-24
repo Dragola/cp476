@@ -107,39 +107,26 @@ class Database
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        switch ($test) {
-            case 1:
-                $sql = "UPDATE Course_Table SET Test1 = ? WHERE Student_ID = ? AND Course_Code = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("iis", $grade, $studentid, $course);
-                $stmt->execute();
+        $test_id = "";
+        if ($test === 1 || $test === 2 || $test === 3)
+            $test_id = "Test" . $test;
+        else if ($test_id === 4)
+            $test_id = "Final";
+        else
+            // This would be an error if the test value is not 1-4. Return that an error has occured
+            return -1;
 
-                break;
-            case 2:
-                $sql = "UPDATE Course_Table SET Test2 = ? WHERE Student_ID = ? AND Course_Code = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("iis", $grade, $studentid, $course);
-                $stmt->execute();
-                break;
-            case 3:
-                $sql = "UPDATE Course_Table SET Test3 = ? WHERE Student_ID = ? AND Course_Code = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("iis", $grade, $studentid, $course);
-                $stmt->execute();
-                break;
-            case 4:
-                $sql = "UPDATE Course_Table SET Final = ? WHERE Student_ID = ? AND Course_Code = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("iis", $grade, $studentid, $course);
-                $stmt->execute();
-                break;
-        }
+        $sql = "UPDATE Course_Table SET " . $test_id . " = ? WHERE Student_ID = ? AND Course_Code = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iis", $grade, $studentid, $course);
+        $stmt->execute();
+
         $rows = $conn->affected_rows;
         $conn->close();
         return $rows;
     }
     /*
-    mass query of the database for every entry.
+    get all students in the db
     */
     function allStudents()
     {
