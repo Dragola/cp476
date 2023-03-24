@@ -78,7 +78,7 @@ echo "<br> <br>";
 
           <label for="test_info">Select the test you'd like to update: </label>
           <br>
-          <input type="radio" id="student_test" name="student_test" value="1">
+          <input type="radio" id="student_test" name="student_test" value="1" checked="true">
           <label for="radio">1</label>
           <input type="radio" id="student_test" name="student_test" value="2">
           <label for="radio">2</label>
