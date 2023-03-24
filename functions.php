@@ -113,6 +113,7 @@ class Database
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("iis", $grade, $studentid, $course);
                 $stmt->execute();
+
                 break;
             case 2:
                 $sql = "UPDATE Course_Table SET Test2 = ? WHERE Student_ID = ? AND Course_Code = ?";
@@ -133,7 +134,9 @@ class Database
                 $stmt->execute();
                 break;
         }
+        $rows = $conn->affected_rows;
         $conn->close();
+        return $rows;
     }
     /*
     mass query of the database for every entry.

@@ -142,10 +142,10 @@
                 throw new Exception("Appologies, but you must use a students id to update a grade. Please try again with a student id.");
               }
               // echo "Id Entered<br>";
-
+      
               // get the class to be updated for student
               $course = $_POST['students_course'];
-              
+
               // class doesn't start with alphabetic character
               if ($course == "" or ctype_alpha($course[0]) == false) {
                 throw new Exception("No class entered or wrong format used. Please try again.");
@@ -158,21 +158,25 @@
               $grade = $_POST['students_grade'];
 
               // grade doesn't start with alphabetic character
-              if ($grade == "" or ctype_alpha($grade[0]) == false) {
+              if ($grade === "" or ctype_alpha($grade[0])) {
                 throw new Exception("No grade entered or wrong format");
               }
 
               // call backend function to update the selected test (can just pass back number 1-4 to indicate what test to update)
               $db = new Database("root", "Silveroffice1!");
               $result = $db->updateTest($student_id, $course, $test, $grade);
-              
-              echo "Update complete. Please select the student to verify the change.";
-              } catch(Exception $e) {
-                echo $e->getMessage(); // print error message
+
+              if ($result === -1 || $result === 0) {
+                echo "Failed to update. ID or class code was entered incorrectly.<br>";
+              } else {
+                echo "Update complete. Please select the student to verify the change.<br>";
               }
+            } catch (Exception $e) {
+              echo $e->getMessage(); // print error message
             }
           }
         }
+      }
       ?>
 
       <input type="submit" class="btn btn-primary" value="Return to Input"><br>
