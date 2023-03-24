@@ -71,12 +71,12 @@ echo "<br> <br>";
           <textarea name="students_update" rows="2" cols="30" class="form-control"></textarea><br>
 
 
-          <label for="students_class">Class the student is taking:</label>
+          <label for="students_course">Course the student is taking:</label>
           <br>
-          <textarea name="students_class" rows="2" cols="30" class="form-control"></textarea><br>
+          <textarea name="students_course" rows="2" cols="30" class="form-control"></textarea><br>
 
 
-          <label for="test_info">Select the test you'd like to update: </label>
+          <label for="student_test">Select the test you'd like to update: </label>
           <br>
           <input type="radio" id="student_test" name="student_test" value="1" checked="true">
           <label for="radio">1</label>
