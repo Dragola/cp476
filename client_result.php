@@ -44,15 +44,14 @@ check_auth();
       <?php
       require('functions.php');
 
-      // check if operator SELECT or UPDATE was chosen
+      // check if either SELECT or UPDATE operator was picked
       if (key_exists('mode', $_POST) == false) {
-        echo "No operation selected, please try again with either SELECT or UPDATE selected."; //print message that no operator was selected
+        echo "No operation selected, please try again with either SELECT or UPDATE selected."; // error message for no operator
       } else {
-        $mode = $_POST['mode']; // get the mode (SELECT or UPDATE)
-        $response = "'" . $mode . "'";
-        // echo "Atempting to run " . $response . " on the database...<br>";
-      
-        // grab list of students to process
+        // get the mode (SELECT or UPDATE)
+        $mode = $_POST['mode']; 
+        
+        // grab list of students to process based on mode
         if ($mode == "SELECT") {
           $students = $_POST['students_select'];
         } else {
@@ -60,8 +59,10 @@ check_auth();
         }
         // echo "Students entered= " . $students . "<br><br>";
       
-        // check that student string isn't empty
+        // remove any white space before or after the list of names/id's
         $trimmed_students = trim($students);
+        
+        // check that student string isn't empty
         if ($trimmed_students == '') {
 
           // print error based on mode
@@ -75,13 +76,11 @@ check_auth();
           // seperate the student names/id's into an array
           $student_array = explode(",", $trimmed_students);
 
-          // trim any whitespace in the students name
-          foreach ($student_array as $value) {
-            $trimmed = trim($value);
-
-            // ensure that there is a string to check
-            if ($trimmed != '') {
-              // echo "Student= " . $trimmed . ", ";
+          // if more then 1 student was entered
+          if (sizeof($student_array) > 1) {
+            // trim any whitespace in the students name/id
+            for($i = 0; $i < sizeof($student_array); $i++) {
+              $student_array[$i] = trim($student_array[$i]);      
             }
           }
 
@@ -89,7 +88,7 @@ check_auth();
           if ($mode == "SELECT") {
             echo "<br>SELECT selected.<br><br>";
 
-            //loop through names
+            //loop through students
             foreach ($student_array as $value) {
               // id was entered
               if (ctype_digit($value[0])) {
@@ -139,7 +138,9 @@ check_auth();
                 echo "</table><br/>";
               }
             }
-          } else { // if operator UPDATE was picked
+          } 
+          // if operator UPDATE was picked
+          else { 
             echo "<br>UPDATE selected.<br>";
             try {
               // verify an id was entered
@@ -147,13 +148,12 @@ check_auth();
               if (ctype_digit($student_id) == false) {
                 throw new Exception("Appologies, but you must use a students id to update a grade. Please try again with a student id.");
               }
-              // echo "Id Entered<br>";
       
               // get the class to be updated for student
               $course = $_POST['students_course'];
 
-              // class doesn't start with alphabetic character
-              if ($course == "" or ctype_alpha($course[0]) == false) {
+              // check if class is blank or doesn't start with alphabetic character
+              if ($course === "" or ctype_alpha($course[0]) == false) {
                 throw new Exception("No class entered or wrong format used. Please try again.");
               }
 
