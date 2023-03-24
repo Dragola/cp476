@@ -135,39 +135,43 @@
             }
           } else { // if operator UPDATE was picked
             echo "<br>UPDATE selected.<br>";
+            try {
+              // verify an id was entered
+              if (ctype_digit($student_array[0][0]) == false) {
+                throw new Exception("Appologies, but you must use a students id to update a grade. Please try again with a student id.");
+              }
+              // echo "Id Entered<br>";
 
-            // verify an id was entered
-            if (ctype_digit($student_array[0][0])) {
-              echo "Id Entered<br>";
-
-              $error = 0; // determine if any information is missing
               // get the class to be updated for student
               $class = $_POST['students_class'];
-              echo "Class= " . $class . "<br><br>";
+              
+              // class doesn't start with alphabetic character
+              if ($class == "" or ctype_alpha($class[0]) == false) {
+                throw new Exception("No class entered or wrong format used. Please try again.");
+              }
 
               // get the test to be updated for student
               $test = $_POST['student_test'];
-              echo "Test to update is= " . $test . "<br><br>";
 
               // get the new grade to set
               $grade = $_POST['students_grade'];
-              echo "Grade will be updated= " . $grade . "<br><br>";
+
+              // grade doesn't start with alphabetic character
+              if ($grade == "" or ctype_alpha($grade[0]) == false) {
+                throw new Exception("No grade entered or wrong format");
+              }
 
               // Need database login to call this!
               // call backend function to update the selected test (can just pass back number 1-4 to indicate what test to update)
               #updateTest($servername, $username, $password, $DB, $studentid,$course,$test1,$test2,$test3,$final);
-            }
-            // named was entered
-            else {
-              echo "Appologies, but you must use the studen't Id to update a grade. Please try again with the students Id.";
+              
+              } catch(Exception $e) {
+                echo $e->getMessage(); // print error message
+              }
             }
           }
         }
-      }
-
-      #should pass back previous input (if I get time to figure out)
       ?>
-
 
       <input type="submit" class="btn btn-primary" value="Return to Input"><br>
     </form>
