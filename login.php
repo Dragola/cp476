@@ -14,23 +14,22 @@ $error_password = "";
 $credential_error = "";
 
 // Process information if coming from POST request (previous attempted login)
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-  // Check if username is empty
-  if (empty(trim($_POST["username"]))) {
+  // Set value of username if not empty
+  if (empty(trim($_POST["username"])))
     $error_username = "Please enter username.";
-  } else {
+  else
     $username = trim($_POST["username"]);
-  }
 
-  // Check if password is empty
-  if (empty(trim($_POST["password"]))) {
+
+  // Set value of password if not empty
+  if (empty($_POST["password"]))
     $error_password = "Please enter your password.";
-  } else {
-    $password = trim($_POST["password"]);
-  }
+  else
+    $password = $_POST["password"];
 
-  // Validate credentials
+  // Validate credentials by attempting a login on the database
   if (empty($error_username) && empty($error_password)) {
     $db = new Database($username, $password);
     if ($db->CheckLogin()) {
@@ -45,18 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+
+<html>
 
 <head>
-  <meta charset="UTF-8">
   <title>Login</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
-    body {
-      font: 14px sans-serif;
-    }
-
     .container {
       display: flex;
       justify-content: center;
@@ -85,17 +79,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <form method="post">
         <div class="form-group">
           <label>Username</label>
-          <input type="text" name="username"
-            class="form-control <?php echo (!empty($error_username)) ? 'is-invalid' : ''; ?>"
-            value="<?php echo $username; ?>">
+          <input type="text" name="username" class="form-control <?php if (empty($error_username))
+            echo '';
+          else
+            echo 'is-invalid'; ?>" value="<?php echo $username; ?>">
           <span class="invalid-feedback">
             <?php echo $error_username; ?>
           </span>
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" name="password"
-            class="form-control <?php echo (!empty($error_password)) ? 'is-invalid' : ''; ?>">
+          <input type="password" name="password" class="form-control <?php if (empty($error_password))
+            echo '';
+          else
+            echo 'is-invalid'; ?>">
           <span class="invalid-feedback">
             <?php echo $error_password; ?>
           </span>
