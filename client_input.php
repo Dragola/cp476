@@ -3,8 +3,6 @@ require('functions.php');
 
 require('authentication.php');
 check_auth();
-
-echo "<br> <br>";
 ?>
 
 <html>
@@ -124,7 +122,7 @@ echo "<br> <br>";
       <?php
 
 
-      $database = new Database("root", "Silveroffice1!");
+      $database = new Database($_SESSION["username"], $_SESSION["password"]);
       echo "<table><tr><th>Student ID</th> <th>Student Name</th></tr>";
 
       $result = $database->allStudents();

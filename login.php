@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($error_username) && empty($error_password)) {
     $db = new Database($username, $password);
     if ($db->CheckLogin()) {
-      logon();
+      logon($username, $password);
     } else {
       $error_username = "";
       $error_password = "";

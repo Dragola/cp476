@@ -2,13 +2,15 @@
 $homepage = "client_input.php";
 $login_page = "login.php";
 
-function logon()
+function logon($username, $password)
 {
   global $homepage;
 
   session_start();
 
-  $_SESSION["loggedin"] = true;
+  $_SESSION["username"] = $username;
+  $_SESSION["password"] = $password;
+
   header("location: " . $homepage);
 }
 
@@ -18,7 +20,7 @@ function check_auth()
 
   session_start();
 
-  if (!isset($_SESSION["loggedin"])) {
+  if (!isset($_SESSION["username"])) {
     header("location: " . $login_page);
     exit;
   }
@@ -31,7 +33,7 @@ function forward_authenticated()
 
   session_start();
 
-  if (isset($_SESSION["loggedin"])) {
+  if (isset($_SESSION["username"])) {
     header("location: " . $homepage);
     exit;
   }

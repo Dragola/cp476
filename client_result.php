@@ -1,3 +1,9 @@
+<?php
+require('authentication.php');
+check_auth();
+?>
+
+
 <html>
 
 <head>
@@ -93,7 +99,7 @@
             1,2,3-3x20%, final
             exam 40%</th></tr>";
 
-                $db = new Database("root", "Silveroffice1!");
+                $db = new Database($_SESSION["username"], $_SESSION["password"]);
                 $result = $db->grabStudentCoursesID($value);
 
                 while ($row = $result->fetch_array()) {
@@ -117,7 +123,7 @@
                 1,2,3-3x20%, final
                 exam 40%</th></tr>";
 
-                $db = new Database("root", "Silveroffice1!");
+                $db = new Database($_SESSION["username"], $_SESSION["password"]);
                 $result = $db->grabStudentCoursesName($value);
 
                 while ($row = $result->fetch_array()) {
@@ -163,9 +169,10 @@
               }
 
               // call backend function to update the selected test (can just pass back number 1-4 to indicate what test to update)
-              $db = new Database("root", "Silveroffice1!");
+              $db = new Database($_SESSION["username"], $_SESSION["password"]);
               $result = $db->updateTest($student_id, $course, $test, $grade);
 
+              // If number of rows affected is not positive, then something went wrong.
               if ($result === -1 || $result === 0) {
                 echo "Failed to update. ID or class code was entered incorrectly.<br>";
               } else {
