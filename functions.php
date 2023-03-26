@@ -107,25 +107,25 @@ class Database
             case 1:
                 $sql = "UPDATE Course_Table SET Test1 = ? WHERE Student_ID = ? AND Course_Code = ?";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("iis", $grade, $studentid, $course);
+                $stmt->bind_param("dis", $grade, $studentid, $course);
                 $stmt->execute();
                 break;
             case 2:
                 $sql = "UPDATE Course_Table SET Test2 = ? WHERE Student_ID = ? AND Course_Code = ?";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("iis", $grade, $studentid, $course);
+                $stmt->bind_param("dis", $grade, $studentid, $course);
                 $stmt->execute();
                 break;
             case 3:
                 $sql = "UPDATE Course_Table SET Test3 = ? WHERE Student_ID = ? AND Course_Code = ?";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("iis", $grade, $studentid, $course);
+                $stmt->bind_param("dis", $grade, $studentid, $course);
                 $stmt->execute();
                 break;
             case 4:
                 $sql = "UPDATE Course_Table SET Final = ? WHERE Student_ID = ? AND Course_Code = ?";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("iis", $grade, $studentid, $course);
+                $stmt->bind_param("dis", $grade, $studentid, $course);
                 $stmt->execute();
                 break;
         }

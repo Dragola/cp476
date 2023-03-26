@@ -86,7 +86,7 @@ check_auth(); // check that user is logged in and valid
           <label for="radio">Final</label>
           <br>
 
-          <label for="students_grade">Grade to update the test to (enter a number with a single decimal):</label>
+          <label for="students_grade">Grade to update the test to (ex. 75.9):</label>
           <br>
           <textarea name="students_grade" rows="1" cols="30" class="form-control"></textarea><br>
         </div>
