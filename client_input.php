@@ -1,8 +1,8 @@
 <?php
 require('functions.php');
-
 require('authentication.php');
-check_auth();
+
+check_auth(); // check that user is logged in and valid
 ?>
 
 <html>
