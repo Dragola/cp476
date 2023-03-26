@@ -1,6 +1,7 @@
 <?php
 require('authentication.php');
-check_auth();
+
+check_auth(); // check that user is logged in and valid
 ?>
 
 
@@ -48,16 +49,15 @@ check_auth();
       if (key_exists('mode', $_POST) == false) {
         echo "No operation selected, please try again with either SELECT or UPDATE selected."; // error message for no operator
       } else {
-        // get the mode (SELECT or UPDATE)
+        // get the mode (either SELECT or UPDATE)
         $mode = $_POST['mode']; 
         
-        // grab list of students to process based on mode
+        // grab list of students to process based on selected mode
         if ($mode == "SELECT") {
           $students = $_POST['students_select'];
         } else {
           $students = $_POST['students_update'];
         }
-        // echo "Students entered= " . $students . "<br><br>";
       
         // remove any white space before or after the list of names/id's
         $trimmed_students = trim($students);
@@ -69,10 +69,9 @@ check_auth();
           if ($mode == 'SELECT') {
             echo "No students entered, please try again with at least 1 student name/id."; // SELECT error
           } else {
-            echo "No students entered, please try again with a single id."; // UPDATE error
+            echo "No student entered, please try again with a single id."; // UPDATE error
           }
         } else {
-          // echo "Splitting students string...<br>";
           // seperate the student names/id's into an array
           $student_array = explode(",", $trimmed_students);
 
@@ -92,7 +91,7 @@ check_auth();
             foreach ($student_array as $value) {
               // id was entered
               if (ctype_digit($value[0])) {
-                echo "ID Entered: " . $value . "<br>";
+                // echo "ID Entered: " . $value . "<br>";
 
                 echo "<table><tr><th>Student ID</th> <th>Student Name</th><th>Course Code</th><th>Final grade (test
             1,2,3-3x20%, final
@@ -116,7 +115,7 @@ check_auth();
               }
               // name was entered
               else {
-                echo "Name Entered: " . $value . "<br>";
+                // echo "Name Entered: " . $value . "<br>";
 
                 echo "<table><tr><th>Student ID</th> <th>Student Name</th><th>Course Code</th><th>Final grade (test
                 1,2,3-3x20%, final
@@ -154,7 +153,7 @@ check_auth();
 
               // check if class is blank or doesn't start with alphabetic character
               if ($course === "" or ctype_alpha($course[0]) == false) {
-                throw new Exception("No class entered or wrong format used. Please try again.");
+                throw new Exception("No class entered or wrong format used. Please try again with a proper class.");
               }
 
               // get the test to be updated for student
@@ -163,12 +162,12 @@ check_auth();
               // get the new grade to set
               $grade = $_POST['students_grade'];
 
-              // grade doesn't start with alphabetic character
-              if ($grade === "" or ctype_alpha($grade[0])) {
-                throw new Exception("No grade entered or wrong format");
+              // check if grade is blank or doesn't start with a number
+              if ($grade === "" or ctype_digit($grade[0]) == false) {
+                throw new Exception("No grade entered or wrong format. Please try again with a number for the grade.");
               }
 
-              // call backend function to update the selected test (can just pass back number 1-4 to indicate what test to update)
+              // call backend function to update the selected test
               $db = new Database($_SESSION["username"], $_SESSION["password"]);
               $result = $db->updateTest($student_id, $course, $test, $grade);
 
