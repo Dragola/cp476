@@ -64,7 +64,7 @@ check_auth(); // check that user is logged in and valid
         </div>
 
         <div class="UPDATE" id="UPDATE" name="UPDATE" style="display: none">
-          <label for="students_update">Id of student to update:</label>
+          <label for="students_update">ID of student to update:</label>
           <br>
           <textarea name="students_update" rows="2" cols="30" class="form-control"></textarea><br>
 

@@ -95,7 +95,6 @@ check_auth(); // check that user is logged in and valid
 
           // if operator SELECT was picked
           if ($mode == "SELECT") {
-            echo "<br>SELECT selected.<br><br>";
 
             //loop through students
             foreach ($student_array as $value) {
@@ -159,7 +158,6 @@ check_auth(); // check that user is logged in and valid
           } 
           // if operator UPDATE was picked
           else {
-            echo "<br>UPDATE selected.<br>";
             try {
               // verify an id was entered
               $student_id = $student_array[0];
@@ -174,7 +172,7 @@ check_auth(); // check that user is logged in and valid
 
               // check if class is blank or doesn't start with alphabetic character
               if ($course === "" or ctype_alpha($course[0]) == false) {
-                throw new Exception("No class entered or wrong format used. Please try again with a proper class. <br>");
+                throw new Exception("No class entered or wrong format used. Please try again with a proper class code. <br>");
               }
 
               // get the test to be updated for student
