@@ -16,10 +16,6 @@ class Database
         $this->password = $password;
 
     }
-    function __destruct()
-    {
-        //echo 'database connection closed';
-    }
     //check to see if password and username are valid
     function CheckLogin()
     {
