@@ -4,9 +4,7 @@ require('authentication.php');
 check_auth(); // check that user is logged in and valid
 ?>
 
-
 <html>
-
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -45,13 +43,15 @@ check_auth(); // check that user is logged in and valid
       <?php
       require('functions.php');
 
+      /**
+       * Prints the database row for the student
+       */
       function printStudentRow($row) {
         echo "<tr>";
         echo "<td>" . $row['Student_ID'] . "</td>";
         echo "<td>" . $row['Student_Name'] . "</td>";
         echo "<td>" . $row['Course_Code'] . "</td>";
         echo "<td>" . number_format($row['Test1'] * .2 + $row['Test2'] * .2 + $row['Test3'] * .2 + $row['Final'] * .3, 1) . "</td>";
-
         echo "</tr>";
       }
 
@@ -100,21 +100,23 @@ check_auth(); // check that user is logged in and valid
             //loop through students
             foreach ($student_array as $value) {
               // id was entered
-              if (ctype_digit($value[0])) {
+              if (ctype_digit($value)) {
+                echo "ID Entered: " . $value . "<br>";
 
                 // create Database object and retrieve student by their id
                 $db = new Database($_SESSION["username"], $_SESSION["password"]);
                 $result = $db->grabStudentCoursesID($value);
 
+                // grab the first row from the result
                 $row = $result->fetch_array();
 
                 // if there is a student with the id
                 if ($row != null) {
                   echo "<table><tr><th>Student ID</th> <th>Student Name</th><th>Course Code</th><th>Final grade (test 1,2,3-3x20%, final exam 40%)</th></tr>";
                   
-                printStudentRow($row); // print row
+                  printStudentRow($row); // print row
 
-                  // print row for any other courses the stend is enrolled in
+                  // print row for any other courses the student is enrolled in
                   while ($row = $result->fetch_array()) { 
                     printStudentRow($row); //print row
                   }
@@ -127,11 +129,13 @@ check_auth(); // check that user is logged in and valid
               }
               // name was entered
               else {
-                // echo "Name Entered: " . $value . "<br>";
-
+                echo "Name Entered: " . $value . "<br>";
+                
+                // create Database object and retrieve student by their id
                 $db = new Database($_SESSION["username"], $_SESSION["password"]);
                 $result = $db->grabStudentCoursesName($value);
 
+                // grab the first row from the result
                 $row = $result->fetch_array();
 
                 // if there is at least 1 row for the query
@@ -140,7 +144,7 @@ check_auth(); // check that user is logged in and valid
                   
                   printStudentRow($row); // print row
 
-                  // print row for any other courses the stend is enrolled in
+                  // print row for any other courses the student is enrolled in
                   while ($row = $result->fetch_array()) { 
                     printStudentRow($row); //print row
                   }
@@ -154,15 +158,17 @@ check_auth(); // check that user is logged in and valid
             }
           } 
           // if operator UPDATE was picked
-          else { 
+          else {
             echo "<br>UPDATE selected.<br>";
             try {
               // verify an id was entered
               $student_id = $student_array[0];
+
+              // check if id is only digits 
               if (ctype_digit($student_id) == false) {
                 throw new Exception("Appologies, but you must use a students id to update a grade. Please try again with a student id. <br>");
               }
-      
+              
               // get the class to be updated for student
               $course = $_POST['students_course'];
 
