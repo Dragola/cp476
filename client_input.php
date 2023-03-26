@@ -69,7 +69,7 @@ check_auth(); // check that user is logged in and valid
           <textarea name="students_update" rows="2" cols="30" class="form-control"></textarea><br>
 
 
-          <label for="students_course">Course the student is taking:</label>
+          <label for="students_course">Course the student is taking (ex. CP476):</label>
           <br>
           <textarea name="students_course" rows="2" cols="30" class="form-control"></textarea><br>
 
@@ -86,7 +86,7 @@ check_auth(); // check that user is logged in and valid
           <label for="radio">Final</label>
           <br>
 
-          <label for="students_grade">Grade to update the test to:</label>
+          <label for="students_grade">Grade to update the test to (enter a number with a single decimal):</label>
           <br>
           <textarea name="students_grade" rows="1" cols="30" class="form-control"></textarea><br>
         </div>
