@@ -17,7 +17,7 @@ class Database
 
     }
     //check to see if password and username are valid
-    function CheckLogin()
+    function checkLogin()
     {
         try {
             $conn = new mysqli($this->servername, $this->username, $this->password);
