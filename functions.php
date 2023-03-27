@@ -33,7 +33,9 @@ class Database
         }
     }
 
-
+    /*
+    function takes student name and queries the database for students matching said name
+    */
     function grabStudentCoursesName($studentname)
     {
         // Create connection
@@ -54,8 +56,7 @@ class Database
         return $result;
     }
     /*
-    function takes servername, username, password, database, and student id
-    query'd the database for courses student under students id
+    function takes student id and queries the database for students matching said id
     */
     function grabStudentCoursesID($studentid)
     {
@@ -77,9 +78,9 @@ class Database
         return $result;
     }
     /*
-    mass query of the database for every entry.
+    mass query of the database for every student
     */
-    function queryAll()
+    function allStudents()
     {
         // Check connection
         $conn = new mysqli($this->servername, $this->username, $this->password, $this->DB);
@@ -88,7 +89,7 @@ class Database
             die("Connection failed: " . $conn->connect_error);
         }
 
-        $sql = "SELECT Course_Table.Student_ID, Name_Table.Student_Name,Course_Table.Course_Code, Course_Table.Test1, Course_Table.Test2, Course_Table.Test3, Course_Table.Final FROM Course_Table INNER JOIN Name_Table ON Name_Table.Student_ID=Course_Table.Student_ID ORDER BY Student_ID, Course_Code";
+        $sql = "SELECT DISTINCT Course_Table.Student_ID, Name_Table.Student_Name FROM Course_Table INNER JOIN Name_Table ON Course_Table.Student_ID=Name_Table.Student_ID ORDER BY Student_Name";
         $result = $conn->query($sql);
         $conn->close();
         return $result;
@@ -104,24 +105,28 @@ class Database
             die("Connection failed: " . $conn->connect_error);
         }
         switch ($test) {
+            // test 1
             case 1:
                 $sql = "UPDATE Course_Table SET Test1 = ? WHERE Student_ID = ? AND Course_Code = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("dis", $grade, $studentid, $course);
                 $stmt->execute();
                 break;
+            // test 2
             case 2:
                 $sql = "UPDATE Course_Table SET Test2 = ? WHERE Student_ID = ? AND Course_Code = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("dis", $grade, $studentid, $course);
                 $stmt->execute();
                 break;
+            // test 3
             case 3:
                 $sql = "UPDATE Course_Table SET Test3 = ? WHERE Student_ID = ? AND Course_Code = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("dis", $grade, $studentid, $course);
                 $stmt->execute();
                 break;
+            // final test
             case 4:
                 $sql = "UPDATE Course_Table SET Final = ? WHERE Student_ID = ? AND Course_Code = ?";
                 $stmt = $conn->prepare($sql);
@@ -130,27 +135,9 @@ class Database
                 break;
         }
 
-
         $rows = $conn->affected_rows;
         $conn->close();
         return $rows;
-    }
-    /*
-    get all students in the db
-    */
-    function allStudents()
-    {
-        // Check connection
-        $conn = new mysqli($this->servername, $this->username, $this->password, $this->DB);
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        $sql = "SELECT * FROM Name_Table";
-        $result = $conn->query($sql);
-        $conn->close();
-        return $result;
     }
 }
 ?>
