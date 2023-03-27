@@ -159,6 +159,12 @@ check_auth(); // check that user is logged in and valid
           // if operator UPDATE was picked
           else {
             try {
+
+              // if more then 1 student was entered
+              if (sizeof($student_array) > 1) {
+                throw new Exception("Too many students entered. Please enter only 1 student id. <br>");
+              }
+
               // verify an id was entered
               $student_id = $student_array[0];
 
